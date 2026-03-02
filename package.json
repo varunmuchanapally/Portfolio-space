@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "homepage": "https://github.com/varunmuchanapally/Portfolio-space.git",
+  "homepage": "https://varunmuchanapally.github.io/Portfolio-space",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
