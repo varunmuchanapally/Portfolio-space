@@ -1,0 +1,206 @@
+/* ===== CSS VARIABLES — Deep Field Palette ===== */
+:root {
+  /* Backgrounds */
+  --bg:              #09090C;
+  --bg-raised:       #111116;
+  --bg-card-dark:    #14141A;
+  --surface:         #F2F1ED;
+  --surface-mid:     #E8E7E2;
+
+  /* Text */
+  --text-primary:    #E8E6E0;
+  --text-secondary:  rgba(232, 230, 224, 0.48);
+  --text-muted:      rgba(232, 230, 224, 0.22);
+  --text-dark:       #0F0F12;
+  --text-dark-sec:   rgba(15, 15, 18, 0.50);
+  --text-dark-muted: rgba(15, 15, 18, 0.28);
+
+  /* Accent — Eigengrau */
+  --accent:          #8B9EB7;
+  --accent-light:    #A8B9CC;
+  --accent-dim:      #6B7E96;
+  --accent-soft:     rgba(139, 158, 183, 0.10);
+  --accent-glow:     rgba(139, 158, 183, 0.18);
+  --accent-border:   rgba(139, 158, 183, 0.22);
+
+  /* Borders */
+  --border-dark:     rgba(232, 230, 224, 0.07);
+  --border-light:    rgba(15, 15, 18, 0.08);
+  --border-accent:   rgba(139, 158, 183, 0.20);
+
+  /* Typography */
+  --font-display:    'DM Serif Display', serif;
+  --font-body:       'Sora', sans-serif;
+  --font-mono:       'JetBrains Mono', monospace;
+
+  /* Motion */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--accent-glow);
+  color: var(--text-primary);
+}
+
+/* ===== TYPOGRAPHY UTILITIES ===== */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-border);
+}
+
+/* ===== LAYOUT ===== */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+section {
+  padding: 128px 0;
+  position: relative;
+}
+
+/* ===== FOCUS RING ===== */
+:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  border-radius: 100px;
+  padding: 13px 28px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out-expo);
+  text-decoration: none;
+  border: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  background: var(--accent-light);
+  box-shadow: 0 0 24px rgba(139, 158, 183, 0.35);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(139, 158, 183, 0.28);
+}
+.btn-secondary:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+/* ===== MONO LABEL UTILITY ===== */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ===== TAG ===== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.tag-dark {
+  background: rgba(139, 158, 183, 0.07);
+  border: 1px solid rgba(139, 158, 183, 0.18);
+  color: var(--accent);
+}
+
+.tag-light {
+  background: rgba(15, 15, 18, 0.06);
+  border: 1px solid rgba(15, 15, 18, 0.10);
+  color: var(--text-dark-sec);
+}
+
+/* ===== GRID UTILITIES ===== */
+.grid-auto {
+  display: grid;
+  gap: 18px;
+}
+
+/* ===== CURSOR BLINK ===== */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.cursor-blink {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+/* ===== SCROLL INDICATOR ===== */
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0.3; }
+}
