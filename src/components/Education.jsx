@@ -1,171 +1,104 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
-const EASE = [0.16, 1, 0.3, 1]
+const EASE        = [0.16, 1, 0.3, 1]
+const TEXT_SHADOW = '0 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.4)'
+const BLOB_BG     = 'radial-gradient(circle at center, rgba(7,9,26,0.65) 0%, transparent 80%)'
 
 const EDUCATION = [
   {
-    degree:    'M.S. in Computer Science',
-    university:'University of Central Florida',
-    location:  'Orlando, FL',
-    gpa:       '3.9 / 4',
-    period:    'Aug 2024 — May 2026',
-    highlights:[
-      'Specialisation in Artificial Intelligence & Machine Learning',
-      'Research focus on Large Language Models and RAG systems',
-      'Graduate Teaching Assistant — AI/ML coursework',
-    ],
+    index:      '01',
+    degree:     'M.S. in Computer Science',
+    university: 'University of Central Florida',
+    location:   'Orlando, FL',
+    gpa:        '3.9 / 4.0',
+    period:     'Aug 2024 — May 2026',
+    active:     true,
   },
   {
-    degree:    'B.Tech. in Computer Science',
-    university:'B V Raju Institute of Technology',
-    location:  'Hyderabad, India',
-    gpa:       '8.05 / 10',
-    period:    'Aug 2020 — Jun 2024',
-    highlights:[
-      'Core coursework in Data Structures, Algorithms, and Systems Design',
-      'Final year project on Neural Network Optimisation',
-      'Active member of the Computer Science Society',
-    ],
+    index:      '02',
+    degree:     'B.Tech. in Computer Science',
+    university: 'B V Raju Institute of Technology',
+    location:   'Hyderabad, India',
+    gpa:        '8.05 / 10',
+    period:     'Aug 2020 — Jun 2024',
+    active:     false,
   },
 ]
 
-function EducationCard({ ed, delay }) {
+function EducationEntry({ ed, delay }) {
   const ref      = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay, ease: EASE }}
       style={{
-        background:     'rgba(14,13,10,0.75)',
-        backdropFilter: 'blur(40px)',
-        border:         '1px solid rgba(139,158,183,0.20)',
-        borderRadius:   '20px',
-        padding:        '44px',
-        boxShadow:      '0 8px 40px rgba(0,0,0,0.35)',
-        position:       'relative',
-        overflow:       'hidden',
+        background:     BLOB_BG,
+        backdropFilter: 'blur(5px)',
+        padding:        '20px',
+        marginLeft:     '-20px',
+        marginBottom:   '64px',
       }}
     >
-      {/* Corner accent glow */}
-      <div style={{
-        position:   'absolute',
-        top:        0,
-        left:       0,
-        width:      '120px',
-        height:     '120px',
-        background: 'radial-gradient(circle at 0% 0%, rgba(139,158,183,0.08), transparent 70%)',
-        pointerEvents: 'none',
-      }} />
-
-      {/* Period */}
+      {/* Sub-label */}
       <div style={{
         fontFamily:    '"JetBrains Mono", monospace',
-        fontSize:      '10px',
-        letterSpacing: '0.18em',
+        fontSize:      '11px',
+        color:         '#A6A8CD',
+        letterSpacing: '0.4em',
         textTransform: 'uppercase',
-        color:         'rgba(139,158,183,0.55)',
-        marginBottom:  '18px',
+        marginBottom:  '16px',
+        display:       'flex',
+        alignItems:    'center',
+        gap:           '14px',
+        textShadow:    '0 1px 3px rgba(0,0,0,0.6)',
       }}>
-        {ed.period}
+        <span style={{ color: '#FDE047', textShadow: '0 0 8px rgba(253,224,71,0.6)', flexShrink: 0 }}>▸</span>
+        {ed.index} // {ed.degree}
+        {ed.active && (
+          <span style={{
+            fontFamily:    '"JetBrains Mono", monospace',
+            fontSize:      '8px',
+            letterSpacing: '0.16em',
+            color:         '#4ade80',
+            border:        '0.5px solid rgba(74,222,128,0.25)',
+            padding:       '2px 8px',
+            flexShrink:    0,
+          }}>
+            ACTIVE
+          </span>
+        )}
       </div>
 
-      {/* Degree */}
+      {/* University — main bold heading */}
       <div style={{
-        fontFamily:   '"DM Serif Display", serif',
-        fontSize:     '24px',
-        fontWeight:   400,
-        color:        'rgba(232,230,224,0.95)',
-        lineHeight:   1.18,
-        marginBottom: '8px',
-      }}>
-        {ed.degree}
-      </div>
-
-      {/* University + location */}
-      <div style={{
-        fontFamily:   '"Sora", sans-serif',
-        fontSize:     '14px',
-        fontWeight:   400,
-        color:        '#8B9EB7',
-        marginBottom: '4px',
+        fontFamily:    '"DM Serif Display", serif',
+        fontSize:      'clamp(32px, 5vw, 60px)',
+        letterSpacing: '-0.02em',
+        color:         '#F8FAFC',
+        textShadow:    TEXT_SHADOW,
+        lineHeight:    1.05,
+        marginBottom:  '20px',
       }}>
         {ed.university}
       </div>
+
+      {/* Details — bold body text */}
       <div style={{
-        fontFamily:   '"Sora", sans-serif',
-        fontSize:     '13px',
-        fontWeight:   300,
-        color:        'rgba(232,230,224,0.38)',
-        marginBottom: '24px',
+        fontFamily:    '"Sora", sans-serif',
+        fontSize:      'clamp(16px, 2.5vw, 22px)',
+        fontWeight:    900,
+        lineHeight:    1.4,
+        color:         '#F8FAFC',
+        letterSpacing: '-0.02em',
+        textShadow:    TEXT_SHADOW,
       }}>
-        {ed.location}
+        {ed.period} · {ed.location} · GPA {ed.gpa}
       </div>
-
-      {/* GPA badge */}
-      <div style={{
-        display:      'inline-flex',
-        alignItems:   'center',
-        gap:          '8px',
-        padding:      '5px 14px 5px 10px',
-        borderRadius: '100px',
-        background:   'rgba(139,158,183,0.10)',
-        border:       '1px solid rgba(139,158,183,0.22)',
-        marginBottom: '28px',
-      }}>
-        <div style={{
-          width:        '6px',
-          height:       '6px',
-          borderRadius: '50%',
-          background:   '#8B9EB7',
-          flexShrink:   0,
-        }} />
-        <span style={{
-          fontFamily:    '"JetBrains Mono", monospace',
-          fontSize:      '10px',
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color:         '#8B9EB7',
-        }}>
-          GPA {ed.gpa}
-        </span>
-      </div>
-
-      {/* Divider */}
-      {/* <div style={{
-        height:       '1px',
-        background:   'rgba(232,230,224,0.07)',
-        marginBottom: '22px',
-      }} /> */}
-
-      {/* Highlights */}
-      {/* <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', padding: 0, margin: 0 }}>
-        {ed.highlights.map(h => (
-          <li key={h} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-            <span style={{
-              flexShrink:   0,
-              marginTop:    '7px',
-              width:        '4px',
-              height:       '4px',
-              borderRadius: '50%',
-              background:   'rgba(139,158,183,0.50)',
-            }} />
-            <span style={{
-              fontFamily: '"Sora", sans-serif',
-              fontSize:   '13px',
-              fontWeight: 300,
-              color:      'rgba(232,230,224,0.55)',
-              lineHeight: 1.65,
-            }}>
-              {h}
-            </span>
-          </li>
-        ))}
-      </ul> */}
     </motion.div>
   )
 }
@@ -175,37 +108,44 @@ export default function Education() {
   const isInView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
-    <div className="container" style={{ paddingTop: '128px', paddingBottom: '128px' }}>
+    <div className="container" style={{ paddingTop: '160px', paddingBottom: '160px' }}>
 
-      {/* Heading */}
+      {/* SECTION HEADER */}
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, ease: EASE }}
-        style={{
-          fontFamily:   '"DM Serif Display", serif',
-          fontSize:     '48px',
-          fontWeight:   400,
-          color:        'rgba(232,230,224,0.92)',
-          lineHeight:   1.08,
-          marginBottom: '40px',
-        }}
+        style={{ marginBottom: '80px' }}
       >
-        Education
+        <div style={{
+          fontFamily:    '"JetBrains Mono", monospace',
+          fontSize:      '12px',
+          color:         '#A6A8CD',
+          letterSpacing: '0.4em',
+          marginBottom:  '8px',
+          textShadow:    '0 1px 3px rgba(0,0,0,0.6)',
+        }}>
+          ◈ SECTION_02 // TRAINING_RECORDS
+        </div>
+        <h2 style={{
+          fontFamily:    '"DM Serif Display", serif',
+          fontSize:      'clamp(48px, 8vw, 84px)',
+          color:         '#F8FAFC',
+          margin:        0,
+          letterSpacing: '-0.02em',
+          textShadow:    TEXT_SHADOW,
+        }}>
+          Education
+        </h2>
       </motion.div>
 
-      {/* Cards grid */}
-      <div style={{
-        display:             'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-        gap:                 '18px',
-      }}>
+      {/* VERTICAL DATA LINE */}
+      <div style={{ borderLeft: '1px solid rgba(166,168,205,0.2)', paddingLeft: '40px' }}>
         {EDUCATION.map((ed, i) => (
-          <EducationCard key={ed.university} ed={ed} delay={i * 0.12} />
+          <EducationEntry key={ed.university} ed={ed} delay={i * 0.12} />
         ))}
       </div>
-
     </div>
   )
 }

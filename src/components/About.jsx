@@ -1,257 +1,193 @@
-import React, { useState } from 'react'
-import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 
 const EASE = [0.16, 1, 0.3, 1]
 
+const TEXT_SHADOW = '0 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.4)'
+const BLOB_BG     = 'radial-gradient(circle at center, rgba(7,9,26,0.65) 0%, transparent 80%)'
+
 const SKILL_GROUPS = [
-  {
-    label: 'Languages',
-    skills: ['Python', 'Java', 'TypeScript', 'SQL', 'C', 'C++', 'JavaScript', 'R', 'HTML/CSS'],
-  },
-  {
-    label: 'AI & LLM Systems',
-    skills: ['LLMs', 'RAG', 'AI Agents', 'LangChain', 'LangGraph', 'LlamaIndex', 'Hugging Face', 'Transformers', 'PyTorch', 'Prompt Engineering', 'LoRA', 'QLoRA (PEFT)', 'bitsandbytes', 'Accelerate', 'HF Datasets'],
-  },
-  {
-    label: 'Vector Databases & Retrieval',
-    skills: ['FAISS', 'Pinecone', 'Weaviate', 'ChromaDB'],
-  },
-  {
-    label: 'Backend & APIs',
-    skills: ['FastAPI', 'Flask', 'Node.js', 'Express.js', 'REST APIs', 'Microservices', 'Postman'],
-  },
-  {
-    label: 'Frontend & Apps',
-    skills: ['React', 'Tailwind CSS', 'Bootstrap', 'Streamlit'],
-  },
-  {
-    label: 'Cloud & AI Platforms',
-    skills: ['AWS SageMaker', 'AWS Bedrock', 'Azure ML', 'Azure OpenAI', 'Azure SQL'],
-  },
-  {
-    label: 'Data & Databases',
-    skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'ETL Pipelines', 'Power BI'],
-  },
-  {
-    label: 'DevOps & Systems',
-    skills: ['Docker', 'Kubernetes', 'GitHub Actions', 'CI/CD', 'Distributed Systems'],
-  },
-  {
-    label: 'Methodologies',
-    skills: ['Agile', 'Scrum'],
-  },
+  { label: 'Languages',              skills: ['Python', 'Java', 'TypeScript', 'SQL', 'C++', 'JavaScript', 'R'] },
+  { label: 'AI & LLM Systems',       skills: ['LLMs', 'RAG', 'AI Agents', 'LangChain', 'LlamaIndex', 'Hugging Face', 'PyTorch'] },
+  { label: 'Vector DB & Retrieval',  skills: ['FAISS', 'Pinecone', 'Weaviate', 'ChromaDB'] },
+  { label: 'Backend & APIs',         skills: ['FastAPI', 'Flask', 'Node.js', 'Express.js', 'REST APIs'] },
+  { label: 'Frontend & Apps',        skills: ['React', 'Tailwind CSS', 'Streamlit'] },
+  { label: 'Cloud & AI Platforms',   skills: ['AWS SageMaker', 'Azure OpenAI', 'Azure SQL'] },
+  { label: 'Data & Databases',       skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'ETL'] },
 ]
 
-// Skill icons — using simple SVG paths for recognizable logos
-const SKILL_ICONS = {
-  'Python':       'devicon-python-plain',
-  'Java':         'devicon-java-plain',
-  'TypeScript':   'devicon-typescript-plain',
-  'SQL':          'devicon-azuresqldatabase-plain',
-  'C':            'devicon-c-plain',
-  'C++':          'devicon-cplusplus-plain',
-  'JavaScript':   'devicon-javascript-plain',
-  'R':            'devicon-r-plain',
-  'HTML/CSS':     'devicon-html5-plain',
-  'LangChain':    'devicon-langchain-plain',
-  'LangGraph':    'devicon-langchain-plain',
-  'LlamaIndex':   'devicon-python-plain',
-  'Hugging Face': 'devicon-huggingface-plain',
-  'Transformers': 'devicon-pytorch-plain',
-  'PyTorch':      'devicon-pytorch-plain',
-  'FAISS':        'devicon-python-plain',
-  'Pinecone':     'devicon-python-plain',
-  'Weaviate':     'devicon-python-plain',
-  'ChromaDB':     'devicon-python-plain',
-  'FastAPI':      'devicon-fastapi-plain',
-  'Flask':        'devicon-flask-original',
-  'Node.js':      'devicon-nodejs-plain',
-  'Express.js':   'devicon-express-original',
-  'React':        'devicon-react-original',
-  'Tailwind CSS': 'devicon-tailwindcss-plain',
-  'Bootstrap':    'devicon-bootstrap-plain',
-  'Streamlit':    'devicon-streamlit-plain',
-  'PostgreSQL':   'devicon-postgresql-plain',
-  'MySQL':        'devicon-mysql-plain',
-  'MongoDB':      'devicon-mongodb-plain',
-  'Redis':        'devicon-redis-plain',
-  'Docker':       'devicon-docker-plain',
-  'Kubernetes':   'devicon-kubernetes-plain',
-  'GitHub Actions':'devicon-github-original',
-  'AWS SageMaker':'devicon-amazonwebservices-plain-wordmark',
-  'AWS Bedrock':  'devicon-amazonwebservices-plain-wordmark',
-  'Azure ML':     'devicon-azure-plain',
-  'Azure OpenAI': 'devicon-azure-plain',
-  'Azure SQL':    'devicon-azure-plain',
-  'Power BI':     'devicon-python-plain',
-}
-
-function SkillTag({ name }) {
-  const [hovered, setHovered] = useState(false)
-  const icon = SKILL_ICONS[name] || '◆'
-
+// ── The "White Ink" Tag ──────────────────────────────────────────────────────
+function InkTag({ name }) {
   return (
-
-    
     <motion.div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      animate={{
-        background: hovered ? 'rgba(139,158,183,0.14)' : 'rgba(139,158,183,0.05)',
-        borderColor: hovered ? 'rgba(139,158,183,0.35)' : 'rgba(139,158,183,0.15)',
-        y: hovered ? -2 : 0,
+      variants={{
+        hidden:  { opacity: 0, x: -5 },
+        visible: { opacity: 1, x: 0 }
       }}
-      transition={{ duration: 0.18, ease: EASE }}
+      whileHover={{
+        color:      '#FDE047',
+        textShadow: '0 0 8px rgba(253,224,71,0.6)',
+        x:          4,
+        transition: { duration: 0.2 }
+      }}
       style={{
-        display:       'inline-flex',
-        alignItems:    'center',
-        gap:           '6px',
-        padding:       '6px 12px',
-        borderRadius:  '8px',
-        border:        '1px solid rgba(139,158,183,0.15)',
-        background:    'rgba(139,158,183,0.05)',
-        cursor:        'default',
-        whiteSpace:    'nowrap',
+        cursor:     'pointer',
+        color:      '#F8FAFC',
+        textShadow: TEXT_SHADOW,
+        padding:    '2px 0',
       }}
     >
-      <i
-  className={`${SKILL_ICONS[name] || 'devicon-devicon-plain'} colored`}
-  style={{ fontSize: '14px', lineHeight: 1 }}
-/>
       <span style={{
-        fontFamily:    '"JetBrains Mono", monospace',
-        fontSize:      '11px',
-        fontWeight:    400,
-        letterSpacing: '0.04em',
-        color:         hovered ? 'rgba(232,230,224,0.90)' : 'rgba(232,230,224,0.60)',
-        transition:    'color 0.18s ease',
+        fontFamily:  '"Sora", sans-serif',
+        fontSize:    '16px',
+        fontWeight:  800,
+        letterSpacing: '-0.02em',
+        display:     'inline-block',
       }}>
         {name}
       </span>
+      <span style={{ color: '#A6A8CD', opacity: 0.35, margin: '0 12px' }}>/</span>
     </motion.div>
   )
 }
 
-function SkillGroup({ group, delay }) {
+// ── The Technical Manifest Group ─────────────────────────────────────────────
+function ManifestGroup({ group, delay }) {
   const ref      = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-40px' })
+  const isInView = useInView(ref, { once: true, margin: '-20px' })
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: EASE }}
-    >
-      {/* Group label */}
+    <div ref={ref} style={{ marginBottom: '40px' }}>
       <div style={{
         fontFamily:    '"JetBrains Mono", monospace',
-        fontSize:      '9px',
-        fontWeight:    400,
-        letterSpacing: '0.20em',
+        fontSize:      '11px',
+        color:         '#A6A8CD',
+        letterSpacing: '0.3em',
         textTransform: 'uppercase',
-        color:         'rgba(139,158,183,0.55)',
-        marginBottom:  '10px',
-        paddingLeft:   '2px',
+        marginBottom:  '16px',
+        display:       'flex',
+        alignItems:    'center',
+        gap:           '15px',
+        textShadow:    '0 1px 3px rgba(0,0,0,0.6)',
       }}>
+        <span style={{ color: '#FDE047', textShadow: '0 0 8px rgba(253,224,71,0.6)' }}>▸</span>
         {group.label}
+        <div style={{ flex: 1, height: '1px', background: 'rgba(166,168,205,0.12)' }} />
       </div>
 
-      {/* Tags */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
-        {group.skills.map(skill => (
-          <SkillTag key={skill} name={skill} />
+      <motion.div
+        style={{ display: 'flex', flexWrap: 'wrap' }}
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        variants={{ visible: { transition: { staggerChildren: 0.03, delayChildren: delay } } }}
+      >
+        {group.skills.map((skill) => (
+          <InkTag key={skill} name={skill} />
         ))}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   )
 }
 
 export default function About() {
-  const bioRef      = useRef(null)
-  const bioInView   = useInView(bioRef, { once: true, margin: '-40px' })
+  const containerRef = useRef(null)
+  const isInView     = useInView(containerRef, { once: true })
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: '128px', paddingBottom: '128px' }}
-    >
-      <div style={{
-  fontFamily:    '"DM Serif Display", serif',
-  fontSize:      '48px',
-  fontWeight:    400,
-  color:         'rgba(232,230,224,0.92)',
-  lineHeight:    1.08,
-  marginBottom:  '40px',
-}}>
-  About Me
-</div>
-      {/* ── Bio card — glass dark, transparent ── */}
-      <motion.div
-        ref={bioRef}
-        initial={{ opacity: 0, y: 32 }}
-        animate={bioInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.75, ease: EASE }}
-        style={{
-          background: 'rgba(14,13,10,0.82)',
-          backdropFilter: 'blur(24px)',
-          border:         '1px solid rgba(139,158,183,0.12)',
-          borderRadius:   '20px',
-          padding:        '44px 48px',
-          marginBottom:   '18px',
-          boxShadow:      '0 8px 40px rgba(0,0,0,0.30)',
-        }}
-      >
-        <p style={{
-          fontFamily:  '"Sora", sans-serif',
-          fontSize:    '17px',
-          fontWeight:  300,
-          lineHeight:  1.80,
-          color:       'rgba(232,230,224,0.82)',
-          maxWidth:    '720px',
-          margin:      0,
-        }}>
-          I'm Varun, an AI Engineer and Software Engineer passionate about building systems
-          that are both technically powerful and thoughtfully designed. I specialise in machine
-          learning, large language models, and full-stack development — bridging the gap between
-          cutting-edge AI research and real-world products.
-        </p>
-      </motion.div>
+    <div className="container" style={{ paddingTop: '160px', paddingBottom: '160px' }}>
 
-      {/* ── Skills glass card ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        animate={bioInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
-        style={{
-          background: 'rgba(14,13,10,0.78)',
-          backdropFilter: 'blur(40px)',
-          border: '1px solid rgba(139,158,183,0.20)',
-          borderRadius:   '20px',
-          padding:        '40px 48px',
-          boxShadow:      '0 8px 40px rgba(0,0,0,0.25)',
-        }}
-      >
-        {/* Card header */}
+      {/* SECTION HEADER */}
+      <div style={{ marginBottom: '80px' }}>
         <div style={{
           fontFamily:    '"JetBrains Mono", monospace',
-          fontSize:      '9px',
-          letterSpacing: '0.22em',
-          textTransform: 'uppercase',
-          color:         'rgba(139,158,183,0.50)',
-          marginBottom:  '32px',
+          fontSize:      '12px',
+          color:         '#A6A8CD',
+          letterSpacing: '0.4em',
+          marginBottom:  '8px',
+          textShadow:    '0 1px 3px rgba(0,0,0,0.6)',
         }}>
-          Technical Skills
+          ◈ SECTION_01 // PILOT_DOSSIER
+        </div>
+        <h2 style={{
+          fontFamily:    '"DM Serif Display", serif',
+          fontSize:      'clamp(48px, 8vw, 84px)',
+          color:         '#F8FAFC',
+          margin:        0,
+          letterSpacing: '-0.02em',
+          textShadow:    TEXT_SHADOW,
+        }}>
+          About Me
+        </h2>
+      </div>
+
+      {/* MANIFEST CONTENT (No Cards) */}
+      <div style={{
+        display:             'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap:                 '60px',
+        borderLeft:          '1px solid rgba(166,168,205,0.15)',
+        paddingLeft:         '40px',
+      }}>
+
+        {/* Bio Column — soft shadow anchor */}
+        <div style={{
+          background:     BLOB_BG,
+          backdropFilter: 'blur(5px)',
+          padding:        '20px',
+          marginLeft:     '-20px',
+        }}>
+          <div style={{
+            fontFamily:    '"JetBrains Mono", monospace',
+            fontSize:      '11px',
+            color:         '#A6A8CD',
+            letterSpacing: '0.3em',
+            marginBottom:  '24px',
+            textShadow:    '0 1px 3px rgba(0,0,0,0.6)',
+          }}>
+            01 // BIOGRAPHY
+          </div>
+          <p style={{
+            fontFamily:  '"Sora", sans-serif',
+            fontSize:    '20px',
+            fontWeight:  900,
+            lineHeight:  1.6,
+            color:       '#F8FAFC',
+            letterSpacing: '-0.03em',
+            textShadow:  TEXT_SHADOW,
+            margin:      0,
+          }}>
+            I'm Varun, an AI Engineer bridging the gap between deep research and
+            functional products. I optimize the invisible systems that power the
+            next generation of intelligent software.
+          </p>
         </div>
 
-        {/* Skill groups */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+        {/* Arsenal Column — soft shadow anchor */}
+        <div
+          ref={containerRef}
+          style={{
+            background:     BLOB_BG,
+            backdropFilter: 'blur(5px)',
+            padding:        '20px',
+            marginLeft:     '-20px',
+          }}
+        >
+          <div style={{
+            fontFamily:    '"JetBrains Mono", monospace',
+            fontSize:      '11px',
+            color:         '#A6A8CD',
+            letterSpacing: '0.3em',
+            marginBottom:  '24px',
+            textShadow:    '0 1px 3px rgba(0,0,0,0.6)',
+          }}>
+            02 // TECHNICAL_ARSENAL
+          </div>
           {SKILL_GROUPS.map((group, i) => (
-            <SkillGroup key={group.label} group={group} delay={i * 0.05} />
+            <ManifestGroup key={group.label} group={group} delay={i * 0.1} />
           ))}
         </div>
-      </motion.div>
+
+      </div>
     </div>
   )
 }

@@ -8,8 +8,6 @@ import Projects from './components/Projects.jsx'
 import Certifications from './components/Certifications.jsx'
 import Contact from './components/Contact.jsx'
 import GalaxyBackground from './components/GalaxyBackground.jsx'
-import UFO from './components/UFO'
-
 export default function App() {
   return (
     <>
@@ -17,7 +15,7 @@ export default function App() {
       <GalaxyBackground />
 
       {/* Navigation */}
-      {/* <Navbar /> */}
+      <Navbar />
 
       {/* Page content */}
       <main>
@@ -43,8 +41,6 @@ export default function App() {
           <Contact />
         </section>
       </main>
-      <UFO />
-
     </>
   )
 }
