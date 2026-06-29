@@ -1,9 +1,7 @@
 import React from 'react'
-import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
 import Education from './components/Education.jsx'
-import Experience from './components/Experience.jsx'
 import Projects from './components/Projects.jsx'
 import Certifications from './components/Certifications.jsx'
 import Contact from './components/Contact.jsx'
@@ -13,9 +11,6 @@ export default function App() {
     <>
       {/* Fixed galaxy canvas behind everything */}
       <GalaxyBackground />
-
-      {/* Navigation */}
-      <Navbar />
 
       {/* Page content */}
       <main>
@@ -27,9 +22,6 @@ export default function App() {
         </section>
         <section id="education"      style={{ background: 'transparent' }}>
           <Education />
-        </section>
-        <section id="experience"     style={{ background: 'transparent' }}>
-          <Experience />
         </section>
         <section id="projects"       style={{ background: 'transparent' }}>
           <Projects />

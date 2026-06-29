@@ -15,15 +15,15 @@ const EDUCATION = [
     period:     'Aug 2024 — May 2026',
     active:     true,
   },
-  {
-    index:      '02',
-    degree:     'B.Tech. in Computer Science',
-    university: 'B V Raju Institute of Technology',
-    location:   'Hyderabad, India',
-    gpa:        '8.05 / 10',
-    period:     'Aug 2020 — Jun 2024',
-    active:     false,
-  },
+  // {
+  //   index:      '02',
+  //   degree:     'B.Tech. in Computer Science',
+  //   university: 'B V Raju Institute of Technology',
+  //   location:   'Hyderabad, India',
+  //   gpa:        '8.05 / 10',
+  //   period:     'Aug 2020 — Jun 2024',
+  //   active:     false,
+  // },
 ]
 
 function EducationEntry({ ed, delay }) {

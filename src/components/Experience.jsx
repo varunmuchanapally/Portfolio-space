@@ -5,49 +5,49 @@ const EASE        = [0.16, 1, 0.3, 1]
 const TEXT_SHADOW = '0 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.4)'
 const BLOB_BG     = 'radial-gradient(circle at center, rgba(7,9,26,0.65) 0%, transparent 80%)'
 
-const EXPERIENCE = [
-  {
-    index:   '01',
-    role:    'IT Engineer',
-    company: 'Institute of Simulation & Training / UCF',
-    location:'Orlando, FL',
-    period:  '2025.07 — Present',
-    current: true,
-    bullets: [
-      'Achieved 100% Windows 11 security baseline compliance via SCCM (PXE boot), DoD-compliant disk wipes, Qualys vulnerability remediation, group policy, BitLocker, and BIOS firmware updates.',
-      'Building Python automation to sync SCCM inventory with ManageEngine Assets via REST APIs (CRUD) for asset ownership and configuration accuracy.',
-    ],
-    tags: ['SCCM', 'Python', 'REST APIs', 'Qualys', 'Windows 11', 'BitLocker'],
-  },
-  {
-    index:   '02',
-    role:    'Software Engineer (AI)',
-    company: 'One Convergence',
-    location:'San Jose, CA — Remote',
-    period:  '2023.04 — 2023.11',
-    current: false,
-    bullets: [
-      'Built URL validation system in Python/PHP: multithreading, async I/O, cron scheduling, REST integrations — processed 10,000+ URLs.',
-      'Engineered RAG pipeline via LangChain + Weaviate: embeddings, vector indexing, semantic search, LLM inference for 10,000+ product records.',
-      'Developed RESTful microservices with JWT auth, RBAC, rate limiting, structured logging.',
-    ],
-    tags: ['Python', 'LangChain', 'Weaviate', 'RAG', 'Flask', 'Microservices'],
-  },
-  {
-    index:   '03',
-    role:    'Python Developer — Web Scraping & Crawling',
-    company: 'Forage AI',
-    location:'New York, NY — Remote',
-    period:  '2022.03 — 2022.12',
-    current: false,
-    bullets: [
-      'Built scraping pipelines (requests, BS4, regex) scheduled via Airflow DAGs, deployed on Azure (Blob, SQL, Functions).',
-      'Managed Azure SQL with schema migrations, normalization, indexing, query optimization.',
-      'Improved stability: retry/backoff, proxy rotation, rate-limit mitigation, monitoring.',
-    ],
-    tags: ['Python', 'BeautifulSoup', 'Airflow', 'Azure', 'Azure SQL', 'ETL'],
-  },
-]
+// const EXPERIENCE = [
+//   {
+//     index:   '01',
+//     role:    'IT Engineer',
+//     company: 'Institute of Simulation & Training / UCF',
+//     location:'Orlando, FL',
+//     period:  '2025.07 — Present',
+//     current: true,
+//     bullets: [
+//       'Achieved 100% Windows 11 security baseline compliance via SCCM (PXE boot), DoD-compliant disk wipes, Qualys vulnerability remediation, group policy, BitLocker, and BIOS firmware updates.',
+//       'Building Python automation to sync SCCM inventory with ManageEngine Assets via REST APIs (CRUD) for asset ownership and configuration accuracy.',
+//     ],
+//     tags: ['SCCM', 'Python', 'REST APIs', 'Qualys', 'Windows 11', 'BitLocker'],
+//   },
+//   {
+//     index:   '02',
+//     role:    'Software Engineer (AI)',
+//     company: 'One Convergence',
+//     location:'San Jose, CA — Remote',
+//     period:  '2023.04 — 2023.11',
+//     current: false,
+//     bullets: [
+//       'Built URL validation system in Python/PHP: multithreading, async I/O, cron scheduling, REST integrations — processed 10,000+ URLs.',
+//       'Engineered RAG pipeline via LangChain + Weaviate: embeddings, vector indexing, semantic search, LLM inference for 10,000+ product records.',
+//       'Developed RESTful microservices with JWT auth, RBAC, rate limiting, structured logging.',
+//     ],
+//     tags: ['Python', 'LangChain', 'Weaviate', 'RAG', 'Flask', 'Microservices'],
+//   },
+//   {
+//     index:   '03',
+//     role:    'Python Developer — Web Scraping & Crawling',
+//     company: 'Forage AI',
+//     location:'New York, NY — Remote',
+//     period:  '2022.03 — 2022.12',
+//     current: false,
+//     bullets: [
+//       'Built scraping pipelines (requests, BS4, regex) scheduled via Airflow DAGs, deployed on Azure (Blob, SQL, Functions).',
+//       'Managed Azure SQL with schema migrations, normalization, indexing, query optimization.',
+//       'Improved stability: retry/backoff, proxy rotation, rate-limit mitigation, monitoring.',
+//     ],
+//     tags: ['Python', 'BeautifulSoup', 'Airflow', 'Azure', 'Azure SQL', 'ETL'],
+//   },
+// ]
 
 function StackTag({ name, isLast }) {
   return (
