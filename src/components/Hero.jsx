@@ -169,14 +169,6 @@ function HeroContent() {
             >
               VIEW_PROJECTS
             </button>
-            <a
-              className="nav-link-ink"
-              href="/Portfolio-space/resume_sde.pdf"
-              download="Varun_Muchanapally_Resume.pdf"
-              style={{ textDecoration: 'none' }}
-            >
-              RESUME_PDF
-            </a>
           </motion.div>
         )}
       </AnimatePresence>
